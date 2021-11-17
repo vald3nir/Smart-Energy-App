@@ -21,23 +21,18 @@ class SubscriberChart extends StatelessWidget {
           colorFn: (SubscriberSeries series, _) => series.barColor)
     ];
 
-    return Container(
-      height: 400,
-      padding: EdgeInsets.all(20),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              const Text(
-                "World of Warcraft Subscribers by Year",
-                // style: Theme.of(context).textTheme.body2,
-              ),
-              Expanded(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        height: 400,
+        width: 800,
+        padding: const EdgeInsets.all(20),
+        child: Card(
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Expanded(
                 child: charts.BarChart(series, animate: true),
-              )
-            ],
-          ),
+              )),
         ),
       ),
     );

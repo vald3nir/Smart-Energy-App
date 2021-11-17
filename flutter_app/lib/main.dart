@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_energy_app/src/views/home.dart';
+import 'package:smart_energy_app/src/views/home/home_page.dart';
 
 void main() {
   runApp(const AppWidget());

@@ -1,12 +1,10 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:smart_energy_app/src/models/subscriber_chart.dart';
 import 'package:smart_energy_app/src/models/subscriber_series.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
-
-  final List<SubscriberSeries> data_list = [
+class HomeViewModel {
+  
+  final List<SubscriberSeries> timeSeries = [
     SubscriberSeries(
       year: "2008",
       subscribers: 10000000,
@@ -48,18 +46,4 @@ class HomePage extends StatelessWidget {
       barColor: charts.ColorUtil.fromDartColor(Colors.red),
     ),
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text("World of Warcraft Subscribers"),
-      ),
-      body: Center(
-          child: SubscriberChart(
-        data: data_list,
-      )),
-    );
-  }
 }
