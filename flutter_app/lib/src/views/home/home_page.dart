@@ -1,7 +1,6 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:smart_energy_app/src/views/chats/subscriber_chart.dart';
-import 'package:smart_energy_app/src/models/subscriber_series.dart';
+import 'package:smart_energy_app/src/views/daily_consumption/daily_consumption_page.dart';
 import 'package:smart_energy_app/src/views/home/home_viewmodel.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,9 +20,7 @@ class HomePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SubscriberChart(
-                data: viewModel.timeSeries,
-              ),
+              DailyConsumptionPage(),
               SubscriberChart(
                 data: viewModel.timeSeries,
               )
