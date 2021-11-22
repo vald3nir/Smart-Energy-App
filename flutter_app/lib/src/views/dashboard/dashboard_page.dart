@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:smart_energy_app/src/views/chats/subscriber_chart.dart';
-import 'package:smart_energy_app/src/views/daily_consumption/daily_consumption_page.dart';
-import 'package:smart_energy_app/src/views/home/home_viewmodel.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+import 'chats/subscriber_chart.dart';
+import 'daily_consumption/daily_consumption_page.dart';
+import 'dashboard_viewmodel.dart';
 
-  final viewModel = HomeViewModel();
+class DashboardPage extends StatelessWidget {
+  DashboardPage({Key? key}) : super(key: key);
+
+  final viewModel = DashboardViewModel();
 
   @override
   Widget build(BuildContext context) {

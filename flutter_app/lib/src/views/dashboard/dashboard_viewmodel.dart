@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:smart_energy_app/src/models/subscriber_series.dart';
 
-class HomeViewModel {
+class DashboardViewModel {
   
   final List<SubscriberSeries> timeSeries = [
     SubscriberSeries(
