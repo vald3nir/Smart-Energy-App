@@ -1,6 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:smart_energy_app/src/components/edit_text_component.dart';
+import 'package:smart_energy_app/src/components/header_component.dart';
 
 import 'login_view_model.dart';
+
+// -----------------------------------------------------------------------------
+// Constants
+// -----------------------------------------------------------------------------
+
+const primaryColor = Color(0xffffff00);
+
+// -----------------------------------------------------------------------------
+// Components
+// -----------------------------------------------------------------------------
+
+final headerComponent = HeaderComponent(
+    parameters: HeaderParameters(
+  imageLogo: 'assets/images/app_logo.png',
+  titleText: 'Smart Energy',
+  titleColor: primaryColor,
+));
+
+class EmailEditTextCompont extends EditTextComponent {
+  EmailEditTextCompont({Key? key})
+      : super(
+            key: key,
+            parameters: EditTextParameters(
+                cursorColor: primaryColor,
+                hint: 'Insira seu email',
+                labelText: 'Email',
+                textInputType: TextInputType.emailAddress));
+}
+
+class PasswordEditTextCompont extends EditTextComponent {
+  PasswordEditTextCompont({Key? key})
+      : super(
+            key: key,
+            parameters: EditTextParameters(
+                cursorColor: primaryColor,
+                hint: 'Insira sua senha',
+                labelText: 'Senha',
+                textInputType: TextInputType.name));
+}
+
+// -----------------------------------------------------------------------------
+// View
+// -----------------------------------------------------------------------------
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,8 +56,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final viewModel = LoginViewModel();
-  static const primaryColor = Color(0xffffff00);
-  final String logo = 'assets/images/app_logo.png';
 
   @override
   Widget build(BuildContext context) {
@@ -25,75 +68,36 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.asset(
-                logo,
-                width: 100,
-                height: 100,
+              // ---------------------------------------------------------------
+              // Header
+              // ---------------------------------------------------------------
+
+              headerComponent,
+
+              // ---------------------------------------------------------------
+              // Email field
+              // ---------------------------------------------------------------
+
+              const SizedBox(
+                height: 50,
               ),
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Smart Energy',
-                  style: TextStyle(color: primaryColor, fontSize: 24),
-                ),
+
+              EmailEditTextCompont(),
+
+              // ---------------------------------------------------------------
+              // Password field
+              // ---------------------------------------------------------------
+             
+              const SizedBox(
+                height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: TextFormField(
-                  cursorColor: primaryColor,
-                  controller: null,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Insira seu email';
-                    }
-                  },
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 3, color: primaryColor),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 3, color: primaryColor),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      labelText: 'E-mail',
-                      labelStyle: const TextStyle(color: primaryColor)),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: primaryColor, fontSize: 25),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: TextFormField(
-                  cursorColor: primaryColor,
-                  controller: null,
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Insira sua senha!';
-                    }
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 3, color: primaryColor),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 3, color: primaryColor),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    labelText: 'Senha',
-                    labelStyle: const TextStyle(color: primaryColor),
-                  ),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: primaryColor, fontSize: 25),
-                ),
-              ),
+
+              PasswordEditTextCompont(),
+
+              // ---------------------------------------------------------------
+              //
+              // ---------------------------------------------------------------
+
               Padding(
                 padding: const EdgeInsets.only(top: 45, bottom: 20),
                 child: SizedBox(

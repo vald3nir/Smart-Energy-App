@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: [
-        GetPage(name: "/", page: () => LoginPage(), children: [
+        GetPage(name: "/", page: () => const LoginPage(), children: [
           GetPage(
               name: "/dashboard",
               page: () => DashboardPage(),
