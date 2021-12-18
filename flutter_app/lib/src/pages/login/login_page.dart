@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smart_energy_app/src/components/edit_text_component.dart';
 import 'package:smart_energy_app/src/components/header_component.dart';
 
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
               // ---------------------------------------------------------------
               // Password field
               // ---------------------------------------------------------------
-             
+
               const SizedBox(
                 height: 50,
               ),
@@ -103,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed("/dashboard"),
                     child: const Text(
                       'Entrar',
                       style: TextStyle(color: Colors.black, fontSize: 18),

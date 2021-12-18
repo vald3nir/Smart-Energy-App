@@ -6,7 +6,6 @@ class LoginViewModel {
   void setPassword(String password) => _password = password;
 
   void makeLogin() {
-    print(_email);
-    print(_password);
+   
   }
 }

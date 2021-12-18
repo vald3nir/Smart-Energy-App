@@ -5,6 +5,7 @@ import 'daily_consumption/daily_consumption_page.dart';
 import 'dashboard_viewmodel.dart';
 
 class DashboardPage extends StatelessWidget {
+  
   DashboardPage({Key? key}) : super(key: key);
 
   final viewModel = DashboardViewModel();

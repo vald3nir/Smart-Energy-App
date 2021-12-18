@@ -26,7 +26,7 @@ class DailyConsumptionPage extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Container(
         height: 400,
-        width: 500,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(20),
         child: Card(
           child: Padding(
