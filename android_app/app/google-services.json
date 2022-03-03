@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "8984393302",
+    "firebase_url": "https://smart-energy-3e7aa-default-rtdb.firebaseio.com",
+    "project_id": "smart-energy-3e7aa",
+    "storage_bucket": "smart-energy-3e7aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8984393302:android:5f6666eef7b091af8d6df7",
+        "android_client_info": {
+          "package_name": "com.vald3nir.smart_energy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8984393302-pvdue6d8paaom477k1l8t3ovpo87lqnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAudhr58foOq6d9cgQ_dxAtzkGJwD5yO4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8984393302-pvdue6d8paaom477k1l8t3ovpo87lqnj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
