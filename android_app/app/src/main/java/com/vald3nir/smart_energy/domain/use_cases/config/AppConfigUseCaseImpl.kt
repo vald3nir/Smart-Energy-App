@@ -15,7 +15,7 @@ class AppConfigUseCaseImpl(
     override fun loadConfiguration(
         appView: AppView?,
         onSuccess: (AppConfigDTO?) -> Unit,
-        onError: (e: Exception?) -> Unit
+        onError: (e: Exception?) -> Unit,
     ) {
         val userId = Firebase.auth.currentUser?.uid
         if (userId != null) {
@@ -35,7 +35,7 @@ class AppConfigUseCaseImpl(
         appView: AppView?,
         appConfigDTO: AppConfigDTO,
         onSuccess: () -> Unit,
-        onError: (e: Exception?) -> Unit
+        onError: (e: Exception?) -> Unit,
     ) {
         val userId = Firebase.auth.currentUser?.uid
         if (userId != null) {

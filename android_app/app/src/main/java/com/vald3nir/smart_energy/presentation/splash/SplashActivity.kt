@@ -15,7 +15,10 @@ class SplashActivity : BaseActivity() {
         binding = EmptyLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.view = this
-        viewModel.loadAppConfig()
     }
 
+    override fun onPostResume() {
+        super.onPostResume()
+        viewModel.loadAppConfig()
+    }
 }

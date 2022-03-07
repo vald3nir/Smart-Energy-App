@@ -3,6 +3,9 @@ package com.vald3nir.smart_energy.common.extensions
 import android.content.Context
 import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.Toast
 import com.androidplot.pie.PieChart
 import com.androidplot.pie.Segment
@@ -23,6 +26,20 @@ import com.vald3nir.smart_energy.common.utils.MAX_VALUE_POWER_CONSUMPTION
 import com.vald3nir.smart_energy.common.utils.getColorPowerValue
 import com.vald3nir.smart_energy.data.dto.ItemChartRealTimeDTO
 import kotlin.math.abs
+
+fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+
+    this.addTextChangedListener(object : TextWatcher {
+
+        override fun afterTextChanged(editable: Editable?) {
+            afterTextChanged.invoke(editable.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+    })
+}
 
 fun LineChart.setup(context: Context, values: ArrayList<Entry>) {
     val markerView = CustomMarkerView(context, R.layout.custom_marker_view)

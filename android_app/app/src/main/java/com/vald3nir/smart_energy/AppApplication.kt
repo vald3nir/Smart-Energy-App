@@ -1,6 +1,8 @@
 package com.vald3nir.smart_energy
 
 import android.app.Application
+import com.vald3nir.smart_energy.data.repository.local.LocalRepository
+import com.vald3nir.smart_energy.data.repository.local.LocalRepositoryImpl
 import com.vald3nir.smart_energy.data.repository.remote.auth.AuthRepository
 import com.vald3nir.smart_energy.data.repository.remote.auth.AuthRepositoryImpl
 import com.vald3nir.smart_energy.data.repository.remote.config.AppConfigRepository
@@ -49,16 +51,37 @@ class AppApplication : Application() {
 
         return module {
 
+            // Local repository
+            factory<LocalRepository> { LocalRepositoryImpl() }
+
             // Repositories
-            factory<AuthRepository> { AuthRepositoryImpl() }
-            factory<ConsumptionRepository> { ConsumptionRepositoryImpl() }
-            factory<RegisterUseCase> { RegisterUseCaseImpl(repository = get()) }
-            factory<AppConfigRepository> { AppConfigRepositoryImpl() }
+            factory<AuthRepository> {
+                AuthRepositoryImpl()
+            }
+            factory<ConsumptionRepository> {
+                ConsumptionRepositoryImpl()
+            }
+            factory<RegisterUseCase> {
+                RegisterUseCaseImpl(repository = get())
+            }
+            factory<AppConfigRepository> {
+                AppConfigRepositoryImpl()
+            }
 
             // Use cases
-            factory<AuthUseCase> { AuthUseCaseImpl(repository = get()) }
-            factory<ConsumptionUseCase> { ConsumptionUseCaseImpl(repository = get()) }
-            factory<RegisterRepository> { RegisterRepositoryImpl() }
+            factory<AuthUseCase> {
+                AuthUseCaseImpl(
+                    repository = get()
+                )
+            }
+            factory<ConsumptionUseCase> {
+                ConsumptionUseCaseImpl(
+                    repository = get()
+                )
+            }
+            factory<RegisterRepository> {
+                RegisterRepositoryImpl()
+            }
             factory<AppConfigUseCase> {
                 AppConfigUseCaseImpl(
                     repository = get(), screenNavigation = get()
@@ -69,13 +92,35 @@ class AppApplication : Application() {
             factory<ScreenNavigation> { ScreenNavigationImpl() }
 
             // View models
-            viewModel { DashboardViewModel(consumptionUseCase = get()) }
-            viewModel { SplashViewModel(screenNavigation = get(), appConfigUseCase = get()) }
-            viewModel { LoginViewModel(screenNavigation = get(), authUseCase = get()) }
-            viewModel { RegisterViewModel(screenNavigation = get(), registerUseCase = get()) }
-            viewModel { SettingsViewModel(appConfigUseCase = get()) }
-
+            viewModel {
+                DashboardViewModel(
+                    consumptionUseCase = get()
+                )
+            }
+            viewModel {
+                SplashViewModel(
+                    screenNavigation = get(),
+                    appConfigUseCase = get()
+                )
+            }
+            viewModel {
+                LoginViewModel(
+                    screenNavigation = get(),
+                    authUseCase = get(),
+                    appConfigUseCase = get()
+                )
+            }
+            viewModel {
+                RegisterViewModel(
+                    screenNavigation = get(),
+                    registerUseCase = get()
+                )
+            }
+            viewModel {
+                SettingsViewModel(
+                    appConfigUseCase = get()
+                )
+            }
         }
     }
-
 }

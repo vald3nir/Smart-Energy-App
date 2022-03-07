@@ -3,18 +3,18 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-class GaugeChart extends StatelessWidget {
+class GaugeChart2 extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
 
-  const GaugeChart({
+  const GaugeChart2({
     Key? key,
     required this.seriesList,
     required this.animate,
   }) : super(key: key);
 
-  factory GaugeChart.withSampleData() {
-    return GaugeChart(
+  factory GaugeChart2.withSampleData() {
+    return GaugeChart2(
       seriesList: _createSampleData(),
       animate: false,
     );
@@ -22,6 +22,7 @@ class GaugeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
@@ -33,12 +34,14 @@ class GaugeChart extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Expanded(
                 // valdenir: PieChart<Data>
-                child: charts.PieChart(seriesList,
-                    animate: animate,
-                    defaultRenderer: charts.ArcRendererConfig(
-                        arcWidth: 30,
-                        startAngle: 4 / 5 * pi,
-                        arcLength: 7 / 5 * pi)),
+                child: charts.PieChart(
+                  seriesList,
+                  // animate: animate,
+                  // defaultRenderer: charts.ArcRendererConfig(
+                  //     arcWidth: 30,
+                  //     startAngle: 4 / 5 * pi,
+                  //     arcLength: 7 / 5 * pi)
+                ),
               )),
         ),
       ),

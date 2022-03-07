@@ -8,10 +8,12 @@ import com.vald3nir.smart_energy.common.validations.isEmailValid
 import com.vald3nir.smart_energy.common.validations.isPasswordValid
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
 import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
+import com.vald3nir.smart_energy.domain.use_cases.config.AppConfigUseCase
 
 class LoginViewModel(
     private val screenNavigation: ScreenNavigation,
     private val authUseCase: AuthUseCase,
+    private val appConfigUseCase: AppConfigUseCase,
 ) : BaseViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
@@ -21,22 +23,22 @@ class LoginViewModel(
         screenNavigation.redirectToRegister(view)
     }
 
-    fun login(email: String, password: String) {
-        view?.showLoading(true)
+    fun login(email: String, password: String, remember: Boolean) {
+        showLoading(true)
         authUseCase.login(appView = view, email = email, password = password,
             onSuccess = {
-                view?.showLoading(false)
+                showLoading(false)
                 screenNavigation.redirectToHome(view)
             }, onError = {
-                view?.showLoading(false)
+                showLoading(false)
                 view?.showMessage(it?.message)
             }
         )
     }
 
-    fun loginDataChanged(username: String, password: String) {
-        if (!isEmailValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_email)
+    fun loginDataChanged(email: String, password: String) {
+        if (!isEmailValid(email)) {
+            _loginForm.value = LoginFormState(emailError = R.string.invalid_email)
         } else if (!isPasswordValid(password)) {
             _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
         } else {
@@ -45,7 +47,7 @@ class LoginViewModel(
     }
 
     data class LoginFormState(
-        val usernameError: Int? = null,
+        val emailError: Int? = null,
         val passwordError: Int? = null,
         val isDataValid: Boolean = false
     )
