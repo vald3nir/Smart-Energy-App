@@ -1,5 +1,7 @@
 package com.vald3nir.smart_energy.data.repository.remote.config
 
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.vald3nir.smart_energy.data.dto.AppConfigDTO
 
 class AppConfigRepositoryImpl : AppConfigRepository {
@@ -17,6 +19,18 @@ class AppConfigRepositoryImpl : AppConfigRepository {
 //        }.addOnFailureListener {
 //            onError.invoke(it)
 //        }
+
+        val db = Firebase.firestore
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    println("${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                println("Error getting documents -> ${exception.message}")
+            }
     }
 
     override fun updateConfiguration(

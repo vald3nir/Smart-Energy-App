@@ -6,49 +6,75 @@ import com.vald3nir.smart_energy.R
 import com.vald3nir.smart_energy.common.core.BaseViewModel
 import com.vald3nir.smart_energy.common.validations.isEmailValid
 import com.vald3nir.smart_energy.common.validations.isPasswordValid
+import com.vald3nir.smart_energy.data.dto.LoginDTO
+import com.vald3nir.smart_energy.data.form.DataUserInputForm
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
 import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
-import com.vald3nir.smart_energy.domain.use_cases.config.AppConfigUseCase
 
 class LoginViewModel(
     private val screenNavigation: ScreenNavigation,
     private val authUseCase: AuthUseCase,
-    private val appConfigUseCase: AppConfigUseCase,
 ) : BaseViewModel() {
 
-    private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
+    private val _loginForm = MutableLiveData<DataUserInputForm>()
+    val loginFormState: LiveData<DataUserInputForm> = _loginForm
+
+    private val _loginDTO = MutableLiveData<LoginDTO?>()
+    val loginDTO: LiveData<LoginDTO?> = _loginDTO
+
+    fun loadLoginData() {
+        runOnBackground {
+            val loginDTO = authUseCase.loadLoginData()
+            runOnMainThread {
+                _loginDTO.postValue(loginDTO)
+            }
+        }
+    }
+
 
     fun register() {
         screenNavigation.redirectToRegister(view)
     }
 
-    fun login(email: String, password: String, remember: Boolean) {
-        showLoading(true)
-        authUseCase.login(appView = view, email = email, password = password,
-            onSuccess = {
-                showLoading(false)
-                screenNavigation.redirectToHome(view)
-            }, onError = {
-                showLoading(false)
-                view?.showMessage(it?.message)
-            }
-        )
-    }
+    fun login(email: String, password: String, rememberLogin: Boolean) {
 
-    fun loginDataChanged(email: String, password: String) {
-        if (!isEmailValid(email)) {
-            _loginForm.value = LoginFormState(emailError = R.string.invalid_email)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-        } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+        if (checkLoginData(email, password)) {
+
+            showLoading(true)
+
+            val loginDTO = LoginDTO(email, password, rememberLogin)
+
+            authUseCase.login(appView = view, loginDTO = loginDTO,
+                onSuccess = {
+                    showLoading(false)
+                    screenNavigation.redirectToHome(view)
+                },
+                onError = {
+                    showLoading(false)
+                    view?.showMessage(it?.message)
+                }
+            )
         }
     }
 
-    data class LoginFormState(
-        val emailError: Int? = null,
-        val passwordError: Int? = null,
-        val isDataValid: Boolean = false
-    )
+    fun checkLoginData(email: String, password: String): Boolean {
+        var isValid = true
+        val dataUserInputForm = DataUserInputForm()
+
+        if (!isEmailValid(email)) {
+            isValid = false
+            dataUserInputForm.emailError = getString(R.string.invalid_email)
+        }
+
+        if (!isPasswordValid(password)) {
+            isValid = false
+            dataUserInputForm.passwordError = getString(R.string.invalid_password)
+        }
+
+        if (!isValid) {
+            _loginForm.value = dataUserInputForm
+        }
+
+        return isValid
+    }
 }

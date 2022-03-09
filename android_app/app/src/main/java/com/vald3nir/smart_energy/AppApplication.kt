@@ -1,8 +1,8 @@
 package com.vald3nir.smart_energy
 
 import android.app.Application
-import com.vald3nir.smart_energy.data.repository.local.LocalRepository
-import com.vald3nir.smart_energy.data.repository.local.LocalRepositoryImpl
+import com.vald3nir.smart_energy.data.repository.local.LocalPreferencesRepository
+import com.vald3nir.smart_energy.data.repository.local.LocalPreferencesRepositoryImpl
 import com.vald3nir.smart_energy.data.repository.remote.auth.AuthRepository
 import com.vald3nir.smart_energy.data.repository.remote.auth.AuthRepositoryImpl
 import com.vald3nir.smart_energy.data.repository.remote.config.AppConfigRepository
@@ -52,17 +52,25 @@ class AppApplication : Application() {
         return module {
 
             // Local repository
-            factory<LocalRepository> { LocalRepositoryImpl() }
+            factory<LocalPreferencesRepository> {
+                LocalPreferencesRepositoryImpl(
+                    context = get()
+                )
+            }
 
             // Repositories
             factory<AuthRepository> {
-                AuthRepositoryImpl()
+                AuthRepositoryImpl(
+                    localPreferences = get()
+                )
             }
             factory<ConsumptionRepository> {
                 ConsumptionRepositoryImpl()
             }
             factory<RegisterUseCase> {
-                RegisterUseCaseImpl(repository = get())
+                RegisterUseCaseImpl(
+                    repository = get()
+                )
             }
             factory<AppConfigRepository> {
                 AppConfigRepositoryImpl()
@@ -84,7 +92,8 @@ class AppApplication : Application() {
             }
             factory<AppConfigUseCase> {
                 AppConfigUseCaseImpl(
-                    repository = get(), screenNavigation = get()
+                    repository = get(),
+                    screenNavigation = get()
                 )
             }
 
@@ -107,7 +116,6 @@ class AppApplication : Application() {
                 LoginViewModel(
                     screenNavigation = get(),
                     authUseCase = get(),
-                    appConfigUseCase = get()
                 )
             }
             viewModel {

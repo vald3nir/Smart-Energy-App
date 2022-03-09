@@ -1,9 +1,13 @@
 package com.vald3nir.smart_energy.common.core
 
 import android.app.Activity
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.vald3nir.smart_energy.common.componets.LoadingScreenDialog
+import com.vald3nir.smart_energy.common.extensions.hideKeyboard
 
 open class BaseActivity : AppCompatActivity(), AppView {
 

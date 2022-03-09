@@ -1,10 +1,12 @@
 package com.vald3nir.smart_energy.presentation.login
 
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import com.vald3nir.smart_energy.common.core.BaseActivity
+import com.vald3nir.smart_energy.common.extensions.actionDoneListener
 import com.vald3nir.smart_energy.common.extensions.afterTextChanged
+import com.vald3nir.smart_energy.common.extensions.format
+import com.vald3nir.smart_energy.common.extensions.hideKeyboard
 import com.vald3nir.smart_energy.databinding.ActivityLoginBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,60 +21,55 @@ class LoginActivity : BaseActivity() {
         setContentView(binding.root)
         viewModel.view = this
         setupObservers()
+        viewModel.loadLoginData()
     }
 
     private fun setupObservers() {
 
         binding.apply {
-
-            btnLogin.apply {
-                isEnabled = false
-                setOnClickListener { login() }
-            }
+            btnLogin.setOnClickListener { login() }
             btnRegister.setOnClickListener { register() }
+        }
 
-            edtEmail.afterTextChanged { loginDataChanged() }
+        viewModel.loginDTO.observe(this@LoginActivity, Observer {
 
-            edtPassword.apply {
-                afterTextChanged { loginDataChanged() }
-                setOnEditorActionListener { _, actionId, _ ->
-                    when (actionId) {
-                        EditorInfo.IME_ACTION_DONE ->
-                            login()
-                    }
-                    false
+            binding.apply {
+
+                edtEmail.setText(it?.email)
+                edtPassword.setText(it?.password)
+                cbRememberLogin.isChecked = it?.rememberLogin == true
+
+                edtEmail.afterTextChanged { loginDataChanged() }
+                edtPassword.apply {
+                    afterTextChanged { loginDataChanged() }
+                    actionDoneListener { login() }
                 }
             }
-        }
+
+            hideKeyboard()
+        })
 
         viewModel.loginFormState.observe(this@LoginActivity, Observer {
 
             val loginState = it ?: return@Observer
 
             binding.apply {
-                btnLogin.isEnabled = loginState.isDataValid
-
-                edtEmailLayout.error =
-                    if (loginState.emailError != null) getString(loginState.emailError) else null
-
-                edtPasswordLayout.error =
-                    if (loginState.passwordError != null) getString(loginState.passwordError) else null
+                edtEmailLayout.error = loginState.emailError
+                edtPasswordLayout.error = loginState.passwordError
             }
         })
     }
 
     private fun ActivityLoginBinding.loginDataChanged() {
-        viewModel.loginDataChanged(
-            edtEmail.text.toString(),
-            edtPassword.text.toString()
-        )
+        viewModel.checkLoginData(edtEmail.text.format(), edtPassword.text.format())
     }
 
     private fun ActivityLoginBinding.login() {
+        hideKeyboard()
         viewModel.login(
-            email = edtEmail.text.toString(),
-            password = edtPassword.text.toString(),
-            remember = cbRememberLogin.isChecked
+            email = edtEmail.text.format(),
+            password = edtPassword.text.format(),
+            rememberLogin = cbRememberLogin.isChecked
         )
     }
 

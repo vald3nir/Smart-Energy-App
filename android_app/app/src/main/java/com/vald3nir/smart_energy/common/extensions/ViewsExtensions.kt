@@ -1,12 +1,17 @@
 package com.vald3nir.smart_energy.common.extensions
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.androidplot.pie.PieChart
 import com.androidplot.pie.Segment
 import com.androidplot.pie.SegmentFormatter
@@ -27,6 +32,19 @@ import com.vald3nir.smart_energy.common.utils.getColorPowerValue
 import com.vald3nir.smart_energy.data.dto.ItemChartRealTimeDTO
 import kotlin.math.abs
 
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
+}
+
+fun Activity.hideKeyboard() {
+    hideKeyboard(currentFocus ?: View(this))
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 
     this.addTextChangedListener(object : TextWatcher {
@@ -39,6 +57,13 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
+}
+
+fun EditText.actionDoneListener(actionDoneListener: () -> Unit) {
+    this.setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) actionDoneListener.invoke()
+        false
+    }
 }
 
 fun LineChart.setup(context: Context, values: ArrayList<Entry>) {
@@ -128,7 +153,6 @@ fun PieChart.loadData(currentPower: Double) {
     invalidate()
 
 }
-
 
 fun BarChart.setup() {
 

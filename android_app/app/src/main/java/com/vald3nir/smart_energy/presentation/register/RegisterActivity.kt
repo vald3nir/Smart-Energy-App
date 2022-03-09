@@ -1,11 +1,12 @@
 package com.vald3nir.smart_energy.presentation.register
 
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import com.vald3nir.smart_energy.R
 import com.vald3nir.smart_energy.common.core.BaseActivity
+import com.vald3nir.smart_energy.common.extensions.actionDoneListener
 import com.vald3nir.smart_energy.common.extensions.afterTextChanged
+import com.vald3nir.smart_energy.common.extensions.hideKeyboard
 import com.vald3nir.smart_energy.databinding.ActivityRegisterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,63 +20,39 @@ class RegisterActivity : BaseActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.view = this
+        initViews()
         setupObservers()
     }
 
-    private fun setupObservers() {
-
+    private fun initViews() {
         binding.apply {
-
             toolbar.apply {
                 title.text = getString(R.string.register)
                 btnBack.setOnClickListener { onBackPressed() }
             }
-
             btnRegister.setOnClickListener { registerNewUser() }
-
             edtEmail.afterTextChanged { registerDataChanged() }
-
             edtPassword.apply { afterTextChanged { registerDataChanged() } }
-
             edtConfirmPassword.apply {
                 afterTextChanged { registerDataChanged() }
-                setOnEditorActionListener { _, actionId, _ ->
-                    when (actionId) {
-                        EditorInfo.IME_ACTION_DONE ->
-                            registerNewUser()
-                    }
-                    false
-                }
+                actionDoneListener { registerNewUser() }
             }
         }
+        hideKeyboard()
+    }
 
+    private fun setupObservers() {
         viewModel.registerFormState.observe(this@RegisterActivity, Observer {
             val loginState = it ?: return@Observer
-            binding.btnRegister.isEnabled = loginState.isDataValid
-
-            if (loginState.usernameError != null) {
-                binding.edtEmail.error = getString(loginState.usernameError)
-            } else {
-                binding.edtEmail.error = null
-            }
-
-            if (loginState.passwordError != null) {
-                binding.edtPassword.error = getString(loginState.passwordError)
-            } else {
-                binding.edtPassword.error = null
-            }
-
-            if (loginState.passwordNotEquals != null) {
-                binding.edtConfirmPassword.error = getString(loginState.passwordNotEquals)
-            } else {
-                binding.edtConfirmPassword.error = null
-            }
+            binding.edtEmailLayout.error = loginState.emailError
+            binding.edtPasswordLayout.error = loginState.passwordError
+            binding.edtConfirmPasswordLayout.error = loginState.confirmPasswordError
         })
     }
 
     private fun registerDataChanged() {
         binding.apply {
-            viewModel.registerDataChanged(
+            viewModel.checkRegisterData(
                 edtEmail.text.toString(),
                 edtPassword.text.toString(),
                 edtConfirmPassword.text.toString()
@@ -87,7 +64,8 @@ class RegisterActivity : BaseActivity() {
         binding.apply {
             viewModel.registerNewUser(
                 email = edtEmail.text.toString(),
-                password = edtPassword.text.toString()
+                password = edtPassword.text.toString(),
+                confirmPassword = edtConfirmPassword.text.toString()
             )
         }
     }

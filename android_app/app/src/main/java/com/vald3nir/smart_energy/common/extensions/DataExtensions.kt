@@ -1,11 +1,19 @@
 package com.vald3nir.smart_energy.common.extensions
 
+import android.text.Editable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.vald3nir.smart_energy.data.dto.ConsumptionRealTimeDTO
 import com.vald3nir.smart_energy.data.dto.DeviceConsumptionDTO
 import org.json.JSONArray
 
+fun Double.toWattsSecond(): String {
+    return "${this.toInt()} W/s"
+}
+
+fun Editable?.format(): String {
+    return this.toString().trim()
+}
 
 fun String.toConsumptionRealTimeDTO(): ConsumptionRealTimeDTO {
     return Gson().fromJson(this, ConsumptionRealTimeDTO::class.java)

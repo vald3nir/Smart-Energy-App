@@ -38,7 +38,6 @@
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textCursorDrawable="@color/white"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -54,7 +53,6 @@
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textCursorDrawable="@color/white"
                     tools:text="vald3nir@gmail.com" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +69,6 @@
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textCursorDrawable="@color/white"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -84,10 +81,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="start"
+                    android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textCursorDrawable="@color/white"
                     tools:text="12345678" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +101,6 @@
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textCursorDrawable="@color/white"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -117,10 +113,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="start"
+                    android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textCursorDrawable="@color/white"
                     tools:text="12345678" />
 
             </com.google.android.material.textfield.TextInputLayout>
