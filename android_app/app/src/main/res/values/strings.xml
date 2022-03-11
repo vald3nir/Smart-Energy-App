@@ -22,4 +22,6 @@
     <string name="remember_login">Lembrar login</string>
     <string name="ip_example">Ex: 192.168.10.169:8080</string>
     <string name="ip_server">IP Server</string>
+    <string name="cancel">Cancelar</string>
+    <string name="options">Opções</string>
 </resources>
