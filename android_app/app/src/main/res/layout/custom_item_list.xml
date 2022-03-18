@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txv_label"
+    style="@style/LabelStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/black"
-    android:orientation="vertical"
-    android:paddingHorizontal="5dp">
+    android:padding="10dp"
+    android:paddingHorizontal="5dp"
+    android:text="@string/app_name"
+    android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/txv_label"
-        style="@style/LabelStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item"
-        android:textColor="@color/white" />
-
-</LinearLayout>
