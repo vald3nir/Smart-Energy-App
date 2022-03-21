@@ -6,6 +6,10 @@ import com.vald3nir.smart_energy.data.repository.remote.auth.AuthRepository
 
 class AuthUseCaseImpl(private val repository: AuthRepository) : AuthUseCase {
 
+    override fun checkUserLogged(): Boolean {
+        return repository.loadCurrentUser() != null
+    }
+
     override fun login(
         appView: AppView?,
         loginDTO: LoginDTO,

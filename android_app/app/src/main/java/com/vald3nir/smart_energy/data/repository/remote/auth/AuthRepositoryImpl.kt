@@ -1,6 +1,7 @@
 package com.vald3nir.smart_energy.data.repository.remote.auth
 
 import android.app.Activity
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.vald3nir.smart_energy.data.dto.LoginDTO
@@ -9,6 +10,10 @@ import com.vald3nir.smart_energy.data.repository.local.LocalPreferencesRepositor
 class AuthRepositoryImpl(
     private val localPreferences: LocalPreferencesRepository
 ) : AuthRepository {
+
+    override fun loadCurrentUser(): FirebaseUser? {
+        return Firebase.auth.currentUser
+    }
 
     override fun login(
         activity: Activity,

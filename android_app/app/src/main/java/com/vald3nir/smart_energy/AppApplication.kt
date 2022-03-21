@@ -109,7 +109,7 @@ class AppApplication : Application() {
             viewModel {
                 SplashViewModel(
                     screenNavigation = get(),
-                    appConfigUseCase = get()
+                    authUseCase = get()
                 )
             }
             viewModel {

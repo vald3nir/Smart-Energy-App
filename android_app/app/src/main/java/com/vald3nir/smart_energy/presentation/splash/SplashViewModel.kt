@@ -1,48 +1,27 @@
 package com.vald3nir.smart_energy.presentation.splash
 
+import androidx.lifecycle.viewModelScope
 import com.vald3nir.smart_energy.common.core.BaseViewModel
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
-import com.vald3nir.smart_energy.domain.use_cases.config.AppConfigUseCase
+import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
+import kotlinx.coroutines.launch
 
 class SplashViewModel(
     private val screenNavigation: ScreenNavigation,
-    private val appConfigUseCase: AppConfigUseCase
+    private val authUseCase: AuthUseCase
 ) : BaseViewModel() {
 
     fun loadAppConfig() {
-
         showLoading(show = true)
-
         runDelay(callback = {
-
-            runOnMainThread {
-                showLoading(false)
-                screenNavigation.redirectToLogin(view)
+            showLoading(false)
+            viewModelScope.launch {
+                if (authUseCase.checkUserLogged()) {
+                    screenNavigation.redirectToHome(view)
+                } else {
+                    screenNavigation.redirectToLogin(view)
+                }
             }
-
-
-//            runOnBackground {
-//
-//                appConfigUseCase.loadConfiguration(view,
-//
-//                    onSuccess = {
-//                        runOnMainThread {
-//                            showLoading(false)
-//                            if (it?.autoLogin == true) {
-//                                screenNavigation.redirectToHome(view)
-//                            } else {
-//                                screenNavigation.redirectToLogin(view)
-//                            }
-//                        }
-//                    },
-//                    onError = {
-//                        runOnMainThread {
-//                            showLoading(false)
-//                            view?.showMessage(it?.message)
-//                        }
-//                    }
-//                )
-//            }
         })
     }
 }
