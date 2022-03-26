@@ -2,6 +2,7 @@ package com.vald3nir.smart_energy.presentation.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.vald3nir.smart_energy.R
 import com.vald3nir.smart_energy.common.core.BaseViewModel
 import com.vald3nir.smart_energy.common.validations.isEmailValid
@@ -10,6 +11,7 @@ import com.vald3nir.smart_energy.data.dto.LoginDTO
 import com.vald3nir.smart_energy.data.form.DataUserInputForm
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
 import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val screenNavigation: ScreenNavigation,
@@ -23,7 +25,7 @@ class LoginViewModel(
     val loginDTO: LiveData<LoginDTO?> = _loginDTO
 
     fun loadLoginData() {
-        runOnBackground {
+        viewModelScope.launch {
             val loginDTO = authUseCase.loadLoginData()
             runOnMainThread {
                 _loginDTO.postValue(loginDTO)
@@ -44,16 +46,18 @@ class LoginViewModel(
 
             val loginDTO = LoginDTO(email, password, rememberLogin)
 
-            authUseCase.login(appView = view, loginDTO = loginDTO,
-                onSuccess = {
-                    showLoading(false)
-                    screenNavigation.redirectToHome(view)
-                },
-                onError = {
-                    showLoading(false)
-                    view?.showMessage(it?.message)
-                }
-            )
+            viewModelScope.launch {
+                authUseCase.login(appView = view, loginDTO = loginDTO,
+                    onSuccess = {
+                        showLoading(false)
+                        screenNavigation.redirectToHome(view)
+                    },
+                    onError = {
+                        showLoading(false)
+                        view?.showMessage(it?.message)
+                    }
+                )
+            }
         }
     }
 

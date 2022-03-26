@@ -4,9 +4,8 @@ import com.vald3nir.smart_energy.data.dto.ConsumptionRealTimeDTO
 
 interface ConsumptionRepository {
 
-    fun subscriberConsumptionRealTime(
+    suspend fun subscriberConsumptionRealTime(
+        topic: String,
         onResponse: (consumptionRealTimeDTO: ConsumptionRealTimeDTO) -> Unit
     )
-
-
 }

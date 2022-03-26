@@ -5,14 +5,16 @@ import com.vald3nir.smart_energy.data.dto.LoginDTO
 
 interface AuthUseCase {
 
-    fun checkUserLogged(): Boolean
+   suspend fun disconnect()
 
-    fun login(
+    suspend  fun checkUserLogged(): Boolean
+
+    suspend   fun login(
         appView: AppView?,
         loginDTO: LoginDTO,
         onSuccess: () -> Unit,
         onError: (e: Exception?) -> Unit,
     )
 
-    fun loadLoginData(): LoginDTO?
+    suspend  fun loadLoginData(): LoginDTO?
 }

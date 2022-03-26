@@ -28,17 +28,7 @@ class CustomSheetDialog(context: Context, private val items: List<CustomItemShee
         }
     }
 
-    inner class SheetDialogAdapter() :
-        RecyclerView.Adapter<ViewHolder>() {
-
-//        private val items = listOf(
-//            CustomItemSheet(title = "item", action = {}),
-//            CustomItemSheet(title = "item", action = {}),
-//            CustomItemSheet(title = "item", action = {}),
-//            CustomItemSheet(title = "item", action = {}),
-//            CustomItemSheet(title = "item", action = {}),
-//            CustomItemSheet(title = "item", action = {}),
-//        )
+    inner class SheetDialogAdapter : RecyclerView.Adapter<ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(CustomItemListBinding.inflate(layoutInflater))
@@ -51,18 +41,24 @@ class CustomSheetDialog(context: Context, private val items: List<CustomItemShee
         override fun getItemCount(): Int = items.size
     }
 
-    inner class ViewHolder(itemView: CustomItemListBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
+    inner class ViewHolder(private val customItemSheet: CustomItemListBinding) :
+        RecyclerView.ViewHolder(customItemSheet.root) {
 
         fun bindView(item: CustomItemSheet) {
-            itemView.apply {
-                setOnClickListener { item.action.invoke() }
+            customItemSheet.apply {
+                root.setOnClickListener {
+                    dismiss()
+                    item.action.invoke()
+                }
+                txvLabel.text = item.title
+                imvIcon.setImageResource(item.icon)
             }
         }
     }
 
     data class CustomItemSheet(
-        val title: String,
+        val icon: Int,
+        val title: String?,
         val action: () -> Unit
     )
 

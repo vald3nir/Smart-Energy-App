@@ -6,14 +6,16 @@ import com.vald3nir.smart_energy.data.dto.LoginDTO
 
 interface AuthRepository {
 
-    fun loadCurrentUser(): FirebaseUser?
+    suspend fun disconnect()
 
-    fun login(
+    suspend fun loadCurrentUser(): FirebaseUser?
+
+    suspend fun login(
         activity: Activity,
         loginDTO: LoginDTO,
         onSuccess: () -> Unit,
         onError: (e: Exception?) -> Unit,
     )
 
-    fun loadLoginData(): LoginDTO?
+    suspend fun loadLoginData(): LoginDTO?
 }

@@ -8,25 +8,27 @@ import java.util.*
 
 class ConsumptionRepositoryImpl : ConsumptionRepository {
 
+    companion object {
+        const val BROKEN_ADDRESS = "broker.hivemq.com"
+    }
+
     private val clientMQTT = Mqtt5Client.builder()
         .identifier(UUID.randomUUID().toString())
         .serverHost(BROKEN_ADDRESS)
+        .automaticReconnect()
+        .applyAutomaticReconnect()
         .buildAsync()
 
     init {
         clientMQTT.connect()
     }
 
-    companion object {
-        const val BROKEN_ADDRESS = "broker.hivemq.com"
-        const val BROKEN_TOPIC = "/smart_energy/publish/client/a32ab0af-970c-11ec-9779-a463a116a9e2"
-    }
-
-    override fun subscriberConsumptionRealTime(
+    override suspend fun subscriberConsumptionRealTime(
+        topic: String,
         onResponse: (consumptionRealTimeDTO: ConsumptionRealTimeDTO) -> Unit
     ) {
         clientMQTT.toAsync().subscribeWith()
-            .topicFilter(BROKEN_TOPIC)
+            .topicFilter(topic)
             .qos(MqttQos.EXACTLY_ONCE)
             .callback(({ message ->
                 run {

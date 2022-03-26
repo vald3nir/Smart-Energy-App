@@ -11,11 +11,15 @@ class AuthRepositoryImpl(
     private val localPreferences: LocalPreferencesRepository
 ) : AuthRepository {
 
-    override fun loadCurrentUser(): FirebaseUser? {
+    override suspend fun disconnect() {
+        Firebase.auth.signOut()
+    }
+
+    override suspend fun loadCurrentUser(): FirebaseUser? {
         return Firebase.auth.currentUser
     }
 
-    override fun login(
+    override suspend fun login(
         activity: Activity,
         loginDTO: LoginDTO,
         onSuccess: () -> Unit,
@@ -36,7 +40,7 @@ class AuthRepositoryImpl(
             }
     }
 
-    override fun loadLoginData(): LoginDTO? {
+    override suspend fun loadLoginData(): LoginDTO? {
         return localPreferences.loadLoginPreferences()
     }
 }

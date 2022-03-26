@@ -3,28 +3,40 @@ package com.vald3nir.smart_energy.presentation.dashboard
 import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.androidplot.pie.Segment
 import com.androidplot.pie.SegmentFormatter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.vald3nir.smart_energy.R
+import com.vald3nir.smart_energy.common.componets.CustomSheetDialog
 import com.vald3nir.smart_energy.common.core.BaseViewModel
 import com.vald3nir.smart_energy.common.utils.MAX_VALUE_POWER_CONSUMPTION
 import com.vald3nir.smart_energy.common.utils.getColorPowerValue
 import com.vald3nir.smart_energy.data.dto.ConsumptionRealTimeDTO
 import com.vald3nir.smart_energy.data.dto.ItemChartRealTimeDTO
+import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
+import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
 import com.vald3nir.smart_energy.domain.use_cases.consumption.ConsumptionUseCase
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 class DashboardViewModel(
+    private val screenNavigation: ScreenNavigation,
     private val consumptionUseCase: ConsumptionUseCase,
+    private val authUseCase: AuthUseCase,
 ) : BaseViewModel() {
 
     private val _consumptionRealTimeDTO = MutableLiveData<ConsumptionRealTimeDTO>()
     val consumptionRealTimeDTO: LiveData<ConsumptionRealTimeDTO> = _consumptionRealTimeDTO
 
     fun subscriberConsumptionRealTime() {
-        consumptionUseCase.subscriberConsumptionRealTime {
-            _consumptionRealTimeDTO.postValue(it)
+        viewModelScope.launch {
+            viewModelScope.launch {
+                consumptionUseCase.subscriberConsumptionRealTime {
+                    _consumptionRealTimeDTO.postValue(it)
+                }
+            }
         }
     }
 
@@ -95,5 +107,28 @@ class DashboardViewModel(
             }
             .addOnFailureListener { e ->
             }
+    }
+
+
+    fun getMenuItems(): List<CustomSheetDialog.CustomItemSheet> {
+        return listOf(
+            CustomSheetDialog.CustomItemSheet(
+                icon = R.drawable.ic_device,
+                title = getString(R.string.devices),
+                action = {}
+            ),
+            CustomSheetDialog.CustomItemSheet(
+                icon = R.drawable.ic_exit,
+                title = getString(R.string.disconnect),
+                action = { disconnectUser() }
+            ),
+        )
+    }
+
+    private fun disconnectUser() {
+        viewModelScope.launch {
+            authUseCase.disconnect()
+            screenNavigation.redirectToLogin(view)
+        }
     }
 }

@@ -103,7 +103,9 @@ class AppApplication : Application() {
             // View models
             viewModel {
                 DashboardViewModel(
-                    consumptionUseCase = get()
+                    screenNavigation = get(),
+                    consumptionUseCase = get(),
+                    authUseCase = get()
                 )
             }
             viewModel {

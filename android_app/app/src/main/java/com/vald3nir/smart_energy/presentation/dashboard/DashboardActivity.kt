@@ -15,7 +15,6 @@ import com.vald3nir.smart_energy.common.utils.getPowerStatus
 import com.vald3nir.smart_energy.databinding.ActivityDashboardBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class DashboardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
@@ -51,6 +50,7 @@ class DashboardActivity : BaseActivity() {
 
     private fun setupObservers() {
         viewModel.subscriberConsumptionRealTime()
+
         viewModel.consumptionRealTimeDTO.observe(this@DashboardActivity, Observer {
             val consumptionRealTimeDTO = it ?: return@Observer
             updateRealTime(consumptionRealTimeDTO.power)
@@ -71,17 +71,7 @@ class DashboardActivity : BaseActivity() {
     }
 
     private fun openMenu() {
-
-        val items = listOf(
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-            CustomSheetDialog.CustomItemSheet(title = "item", action = {}),
-        )
-
-        val dialog = CustomSheetDialog(this, items)
+        val dialog = CustomSheetDialog(this, viewModel.getMenuItems())
         dialog.setCancelable(true)
         dialog.show()
     }
