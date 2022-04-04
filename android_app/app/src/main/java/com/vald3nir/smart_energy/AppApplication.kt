@@ -21,9 +21,12 @@ import com.vald3nir.smart_energy.domain.use_cases.consumption.ConsumptionUseCase
 import com.vald3nir.smart_energy.domain.use_cases.consumption.ConsumptionUseCaseImpl
 import com.vald3nir.smart_energy.domain.use_cases.register.RegisterUseCase
 import com.vald3nir.smart_energy.domain.use_cases.register.RegisterUseCaseImpl
+import com.vald3nir.smart_energy.domain.use_cases.sensor.SensorUseCase
+import com.vald3nir.smart_energy.domain.use_cases.sensor.SensorUseCaseImpl
 import com.vald3nir.smart_energy.presentation.dashboard.DashboardViewModel
 import com.vald3nir.smart_energy.presentation.login.LoginViewModel
 import com.vald3nir.smart_energy.presentation.register.RegisterViewModel
+import com.vald3nir.smart_energy.presentation.sensor.SensorManagerViewModel
 import com.vald3nir.smart_energy.presentation.settings.SettingsViewModel
 import com.vald3nir.smart_energy.presentation.splash.SplashViewModel
 import io.realm.Realm
@@ -52,85 +55,31 @@ class AppApplication : Application() {
         return module {
 
             // Local repository
-            factory<LocalPreferencesRepository> {
-                LocalPreferencesRepositoryImpl(
-                    context = get()
-                )
-            }
+            factory<LocalPreferencesRepository> { LocalPreferencesRepositoryImpl(get()) }
 
             // Repositories
-            factory<AuthRepository> {
-                AuthRepositoryImpl(
-                    localPreferences = get()
-                )
-            }
-            factory<ConsumptionRepository> {
-                ConsumptionRepositoryImpl()
-            }
-            factory<RegisterUseCase> {
-                RegisterUseCaseImpl(
-                    repository = get()
-                )
-            }
-            factory<AppConfigRepository> {
-                AppConfigRepositoryImpl()
-            }
+            factory<AuthRepository> { AuthRepositoryImpl(get()) }
+            factory<ConsumptionRepository> { ConsumptionRepositoryImpl() }
+            factory<RegisterUseCase> { RegisterUseCaseImpl(get()) }
+            factory<AppConfigRepository> { AppConfigRepositoryImpl() }
 
             // Use cases
-            factory<AuthUseCase> {
-                AuthUseCaseImpl(
-                    repository = get()
-                )
-            }
-            factory<ConsumptionUseCase> {
-                ConsumptionUseCaseImpl(
-                    repository = get()
-                )
-            }
-            factory<RegisterRepository> {
-                RegisterRepositoryImpl()
-            }
-            factory<AppConfigUseCase> {
-                AppConfigUseCaseImpl(
-                    repository = get(),
-                    screenNavigation = get()
-                )
-            }
+            factory<AuthUseCase> { AuthUseCaseImpl(get()) }
+            factory<SensorUseCase> { SensorUseCaseImpl(get()) }
+            factory<ConsumptionUseCase> { ConsumptionUseCaseImpl(get()) }
+            factory<RegisterRepository> { RegisterRepositoryImpl() }
+            factory<AppConfigUseCase> { AppConfigUseCaseImpl(get(), get()) }
 
             // Navigation
             factory<ScreenNavigation> { ScreenNavigationImpl() }
 
             // View models
-            viewModel {
-                DashboardViewModel(
-                    screenNavigation = get(),
-                    consumptionUseCase = get(),
-                    authUseCase = get()
-                )
-            }
-            viewModel {
-                SplashViewModel(
-                    screenNavigation = get(),
-                    authUseCase = get()
-                )
-            }
-            viewModel {
-                LoginViewModel(
-                    screenNavigation = get(),
-                    authUseCase = get(),
-                )
-            }
-            viewModel {
-                RegisterViewModel(
-                    screenNavigation = get(),
-                    registerUseCase = get()
-                )
-            }
-            viewModel {
-                SettingsViewModel(
-                    appConfigUseCase = get()
-                )
-            }
+            viewModel { DashboardViewModel(get(), get(), get()) }
+            viewModel { SplashViewModel(get(), get()) }
+            viewModel { LoginViewModel(get(), get()) }
+            viewModel { SensorManagerViewModel(get(), get()) }
+            viewModel { RegisterViewModel(get(), get()) }
+            viewModel { SettingsViewModel(get()) }
         }
     }
 }

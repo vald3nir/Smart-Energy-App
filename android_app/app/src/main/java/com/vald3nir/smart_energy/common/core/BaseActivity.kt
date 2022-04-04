@@ -1,13 +1,9 @@
 package com.vald3nir.smart_energy.common.core
 
 import android.app.Activity
-import android.content.Context
-import android.util.AttributeSet
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.vald3nir.smart_energy.common.componets.LoadingScreenDialog
-import com.vald3nir.smart_energy.common.extensions.hideKeyboard
 
 open class BaseActivity : AppCompatActivity(), AppView {
 
@@ -39,4 +35,24 @@ open class BaseActivity : AppCompatActivity(), AppView {
             loadingScreenDialog?.dismiss()
         }
     }
+
+
+
+
+//    fun hasAndroidPermission(permission: String): Boolean {
+//        return EasyPermissions.hasPermissions(this, permission)
+//    }
+//
+//    fun requestPermissions(permission: String, requestCode: Int, message: String) {
+//        EasyPermissions.requestPermissions(this, message, requestCode, permission)
+//    }
+//
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+//    }
 }

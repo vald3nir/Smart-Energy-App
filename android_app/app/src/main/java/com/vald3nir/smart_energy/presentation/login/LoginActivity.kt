@@ -73,7 +73,7 @@ class LoginActivity : BaseActivity() {
         )
     }
 
-    private fun ActivityLoginBinding.register() {
+    private fun register() {
         viewModel.register()
     }
 }

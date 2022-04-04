@@ -7,4 +7,5 @@ interface ScreenNavigation {
     fun redirectToRegister(appView: AppView?)
     fun redirectToHome(appView: AppView?)
     fun redirectToSettings(appView: AppView?)
+    fun redirectToSensorManager(appView: AppView?)
 }

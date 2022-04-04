@@ -4,6 +4,7 @@ import android.content.Intent
 import com.vald3nir.smart_energy.common.core.AppView
 import com.vald3nir.smart_energy.common.extensions.hideKeyboard
 import com.vald3nir.smart_energy.presentation.dashboard.DashboardActivity
+import com.vald3nir.smart_energy.presentation.sensor.SensorManagerActivity
 import com.vald3nir.smart_energy.presentation.login.LoginActivity
 import com.vald3nir.smart_energy.presentation.register.RegisterActivity
 import com.vald3nir.smart_energy.presentation.settings.SettingsActivity
@@ -35,5 +36,9 @@ class ScreenNavigationImpl : ScreenNavigation {
 
     override fun redirectToSettings(appView: AppView?) {
         openActivity(appView, SettingsActivity::class.java)
+    }
+
+    override fun redirectToSensorManager(appView: AppView?) {
+        openActivity(appView, SensorManagerActivity::class.java)
     }
 }

@@ -12,16 +12,17 @@ class SplashViewModel(
 ) : BaseViewModel() {
 
     fun loadAppConfig() {
-        showLoading(show = true)
-        runDelay(callback = {
-            showLoading(false)
-            viewModelScope.launch {
-                if (authUseCase.checkUserLogged()) {
-                    screenNavigation.redirectToHome(view)
-                } else {
-                    screenNavigation.redirectToLogin(view)
-                }
-            }
-        })
+        screenNavigation.redirectToSensorManager(view)
+//        showLoading(show = true)
+//        runDelay(callback = {
+//            showLoading(false)
+//            viewModelScope.launch {
+//                if (authUseCase.checkUserLogged()) {
+//                    screenNavigation.redirectToHome(view)
+//                } else {
+//                    screenNavigation.redirectToLogin(view)
+//                }
+//            }
+//        })
     }
 }
