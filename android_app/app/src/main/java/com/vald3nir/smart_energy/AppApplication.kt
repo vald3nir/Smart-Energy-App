@@ -11,6 +11,8 @@ import com.vald3nir.smart_energy.data.repository.remote.consumption.ConsumptionR
 import com.vald3nir.smart_energy.data.repository.remote.consumption.ConsumptionRepositoryImpl
 import com.vald3nir.smart_energy.data.repository.remote.register.RegisterRepository
 import com.vald3nir.smart_energy.data.repository.remote.register.RegisterRepositoryImpl
+import com.vald3nir.smart_energy.data.repository.remote.sensor.SensorRepository
+import com.vald3nir.smart_energy.data.repository.remote.sensor.SensorRepositoryImpl
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigation
 import com.vald3nir.smart_energy.domain.navigation.ScreenNavigationImpl
 import com.vald3nir.smart_energy.domain.use_cases.auth.AuthUseCase
@@ -54,26 +56,25 @@ class AppApplication : Application() {
 
         return module {
 
-            // Local repository
             factory<LocalPreferencesRepository> { LocalPreferencesRepositoryImpl(get()) }
 
-            // Repositories
             factory<AuthRepository> { AuthRepositoryImpl(get()) }
-            factory<ConsumptionRepository> { ConsumptionRepositoryImpl() }
-            factory<RegisterUseCase> { RegisterUseCaseImpl(get()) }
-            factory<AppConfigRepository> { AppConfigRepositoryImpl() }
-
-            // Use cases
             factory<AuthUseCase> { AuthUseCaseImpl(get()) }
-            factory<SensorUseCase> { SensorUseCaseImpl(get()) }
+
+            factory<ConsumptionRepository> { ConsumptionRepositoryImpl() }
             factory<ConsumptionUseCase> { ConsumptionUseCaseImpl(get()) }
+
             factory<RegisterRepository> { RegisterRepositoryImpl() }
+            factory<RegisterUseCase> { RegisterUseCaseImpl(get()) }
+
+            factory<AppConfigRepository> { AppConfigRepositoryImpl() }
             factory<AppConfigUseCase> { AppConfigUseCaseImpl(get(), get()) }
 
-            // Navigation
+            factory<SensorRepository> { SensorRepositoryImpl() }
+            factory<SensorUseCase> { SensorUseCaseImpl(get()) }
+
             factory<ScreenNavigation> { ScreenNavigationImpl() }
 
-            // View models
             viewModel { DashboardViewModel(get(), get(), get()) }
             viewModel { SplashViewModel(get(), get()) }
             viewModel { LoginViewModel(get(), get()) }

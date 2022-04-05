@@ -1,8 +1,8 @@
-package com.vald3nir.smart_energy.domain.use_cases.sensor
+package com.vald3nir.smart_energy.data.repository.remote.sensor
 
 import com.vald3nir.smart_energy.data.dto.SensorDTO
 
-interface SensorUseCase {
+interface SensorRepository {
 
     suspend fun updateSensorList(
         userID: String,
