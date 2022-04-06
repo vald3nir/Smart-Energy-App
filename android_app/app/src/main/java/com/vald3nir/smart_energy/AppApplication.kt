@@ -78,7 +78,7 @@ class AppApplication : Application() {
             viewModel { DashboardViewModel(get(), get(), get()) }
             viewModel { SplashViewModel(get(), get()) }
             viewModel { LoginViewModel(get(), get()) }
-            viewModel { SensorManagerViewModel(get(), get()) }
+            viewModel { SensorManagerViewModel(get(), get(), get()) }
             viewModel { RegisterViewModel(get(), get()) }
             viewModel { SettingsViewModel(get()) }
         }

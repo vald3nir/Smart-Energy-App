@@ -10,6 +10,10 @@ class AuthUseCaseImpl(private val repository: AuthRepository) : AuthUseCase {
         repository.disconnect()
     }
 
+    override suspend fun getUserID(): String? {
+        return repository.loadCurrentUser()?.uid
+    }
+
     override suspend fun checkUserLogged(): Boolean {
         return repository.loadCurrentUser() != null
     }

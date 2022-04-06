@@ -1,31 +1,24 @@
 package com.vald3nir.smart_energy.data.repository.remote.sensor
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
-import com.vald3nir.smart_energy.data.dto.SensorDTO
+import com.vald3nir.smart_energy.data.dto.SensorListDTO
+import com.vald3nir.smart_energy.data.dto.toSensorListDTO
 
 
 class SensorRepositoryImpl : SensorRepository {
 
     override suspend fun updateSensorList(
         userID: String,
-        list: List<SensorDTO>,
+        sensorList: SensorListDTO,
         onSuccess: () -> Unit,
         onError: (e: Exception?) -> Unit
     ) {
 
-        val data: MutableMap<String, Any> = HashMap()
-        data["sensors"] = list //Gson().toJson(list)
-
         FirebaseFirestore.getInstance()
             .collection(userID)
             .document("sensor_list")
-            .collection("users")
-//            .document("sensors")
-//            .collection("sensors")
-            .add(data)
-            .addOnSuccessListener { documentReference ->
-                println(documentReference.id)
+            .set(sensorList.toHashMap())
+            .addOnSuccessListener {
                 onSuccess.invoke()
             }
             .addOnFailureListener {
@@ -36,9 +29,18 @@ class SensorRepositoryImpl : SensorRepository {
 
     override suspend fun getSensorList(
         userID: String,
-        onSuccess: (list: List<SensorDTO>) -> Unit,
+        onSuccess: (sensorList: SensorListDTO?) -> Unit,
         onError: (e: Exception?) -> Unit
     ) {
-
+        FirebaseFirestore.getInstance()
+            .collection(userID)
+            .document("sensor_list")
+            .get()
+            .addOnSuccessListener {
+                onSuccess.invoke(it.data?.toSensorListDTO())
+            }
+            .addOnFailureListener {
+                onError.invoke(it)
+            }
     }
 }

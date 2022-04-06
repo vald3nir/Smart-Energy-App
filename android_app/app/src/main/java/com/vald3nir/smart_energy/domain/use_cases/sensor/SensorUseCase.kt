@@ -1,19 +1,19 @@
 package com.vald3nir.smart_energy.domain.use_cases.sensor
 
-import com.vald3nir.smart_energy.data.dto.SensorDTO
+import com.vald3nir.smart_energy.data.dto.SensorListDTO
 
 interface SensorUseCase {
 
     suspend fun updateSensorList(
         userID: String,
-        list: List<SensorDTO>,
+        sensorList: SensorListDTO,
         onSuccess: () -> Unit,
         onError: (e: Exception?) -> Unit,
     )
 
     suspend fun getSensorList(
         userID: String,
-        onSuccess: (list: List<SensorDTO>) -> Unit,
+        onSuccess: (sensorList: SensorListDTO?) -> Unit,
         onError: (e: Exception?) -> Unit,
     )
 }

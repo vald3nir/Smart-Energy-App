@@ -31,7 +31,7 @@ class SensorManagerActivity : BaseActivity() {
 
     private fun setupObservers() {
 
-        viewModel.updateSensorList()
+        viewModel.getSensorList()
 
         binding.apply {
             btnAddNewSensor.setOnClickListener { readQRCode() }

@@ -15,6 +15,10 @@ open class BaseViewModel : ViewModel() {
         return view?.getActivityContext()?.getString(id)
     }
 
+    fun showMessage(message: String?) {
+        view?.showMessage(message)
+    }
+
     fun showLoading(show: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.Main) {
