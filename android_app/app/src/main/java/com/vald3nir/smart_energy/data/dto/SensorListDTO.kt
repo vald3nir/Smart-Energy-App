@@ -1,7 +1,7 @@
 package com.vald3nir.smart_energy.data.dto
 
 class SensorListDTO(
-    private val items: List<SensorDTO> = listOf()
+    var items: List<SensorDTO> = listOf()
 ) {
 
     fun toHashMap(): MutableMap<String, Any> {

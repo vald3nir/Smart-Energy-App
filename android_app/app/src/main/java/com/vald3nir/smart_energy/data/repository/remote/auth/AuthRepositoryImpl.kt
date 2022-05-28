@@ -40,7 +40,10 @@ class AuthRepositoryImpl(
             }
     }
 
-    override suspend fun loadLoginData(): LoginDTO? {
-        return localPreferences.loadLoginPreferences()
+    override suspend fun loadLoginData(
+        onSuccess: (loginDTO: LoginDTO?) -> Unit,
+        onError: (e: Exception?) -> Unit
+    ) {
+        onSuccess.invoke(localPreferences.loadLoginPreferences())
     }
 }

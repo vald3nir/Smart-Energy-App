@@ -26,27 +26,22 @@ class LoginViewModel(
 
     fun loadLoginData() {
         viewModelScope.launch {
-            val loginDTO = authUseCase.loadLoginData()
-            runOnMainThread {
-                _loginDTO.postValue(loginDTO)
-            }
+            authUseCase.loadLoginData(
+                onSuccess = { _loginDTO.postValue(it) },
+                onError = { showMessage(it?.message) }
+            )
         }
     }
-
 
     fun register() {
         screenNavigation.redirectToRegister(view)
     }
 
     fun login(email: String, password: String, rememberLogin: Boolean) {
-
-        if (checkLoginData(email, password)) {
-
-            showLoading(true)
-
-            val loginDTO = LoginDTO(email, password, rememberLogin)
-
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if (checkLoginData(email, password)) {
+                showLoading(true)
+                val loginDTO = LoginDTO(email, password, rememberLogin)
                 authUseCase.login(appView = view, loginDTO = loginDTO,
                     onSuccess = {
                         showLoading(false)
@@ -54,7 +49,7 @@ class LoginViewModel(
                     },
                     onError = {
                         showLoading(false)
-                        view?.showMessage(it?.message)
+                        showMessage(it?.message)
                     }
                 )
             }

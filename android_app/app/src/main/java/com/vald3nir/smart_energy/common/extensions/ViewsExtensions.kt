@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androidplot.pie.PieChart
 import com.androidplot.pie.Segment
 import com.androidplot.pie.SegmentFormatter
@@ -43,6 +45,25 @@ fun Activity.hideKeyboard() {
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun RecyclerView.setup(
+    adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+    layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(
+        context,
+        LinearLayoutManager.VERTICAL,
+        false
+    ),
+    itemDecoration: RecyclerView.ItemDecoration? = null
+) {
+    this.adapter = adapter
+    this.layoutManager = layoutManager
+    if (itemDecoration != null) {
+        while (itemDecorationCount > 0) {
+            removeItemDecorationAt(0)
+        }
+        this.addItemDecoration(itemDecoration)
+    }
 }
 
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {

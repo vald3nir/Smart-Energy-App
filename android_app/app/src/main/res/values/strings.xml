@@ -25,4 +25,7 @@
     <string name="device_settings">Configurações do Dispositivo</string>
     <string name="devices">Dispositivos</string>
     <string name="item_menu">item do menu</string>
+    <string name="sensor_management">Gestão de Sensores</string>
+    <string name="edit">Editar</string>
+    <string name="sensor">Sensor</string>
 </resources>

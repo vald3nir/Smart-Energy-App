@@ -18,5 +18,8 @@ interface AuthUseCase {
         onError: (e: Exception?) -> Unit,
     )
 
-    suspend fun loadLoginData(): LoginDTO?
+    suspend fun loadLoginData(
+        onSuccess: (loginDTO: LoginDTO?) -> Unit,
+        onError: (e: Exception?) -> Unit,
+    )
 }

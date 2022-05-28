@@ -3,6 +3,9 @@ package com.vald3nir.smart_energy.presentation.sensor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.vald3nir.smart_energy.R
+import com.vald3nir.smart_energy.common.componets.CustomSheetDialog
+import com.vald3nir.smart_energy.common.core.AppView
 import com.vald3nir.smart_energy.common.core.BaseViewModel
 import com.vald3nir.smart_energy.data.dto.SensorDTO
 import com.vald3nir.smart_energy.data.dto.SensorListDTO
@@ -17,12 +20,14 @@ class SensorManagerViewModel(
     private val authUseCase: AuthUseCase,
 ) : BaseViewModel() {
 
-    private val _sensorList = MutableLiveData<SensorDTO>()
-    val sensorList: LiveData<SensorDTO> = _sensorList
+    private val _sensorList = MutableLiveData<SensorListDTO>()
+    val sensorList: LiveData<SensorListDTO> = _sensorList
+
+
+
 
 
     fun getSensorList() {
-
         viewModelScope.launch {
             val userID = authUseCase.getUserID()
             if (userID == null) {
@@ -30,27 +35,34 @@ class SensorManagerViewModel(
             } else {
                 sensorUseCase.getSensorList(
                     userID = userID,
+//                    onSuccess = { _sensorList.postValue(it) },
                     onSuccess = {
-                        println(it)
+                        it?.items = listOf(
+                            SensorDTO(id = "1", alias = "sensor 1", enable = true),
+                            SensorDTO(id = "2", alias = "sensor 2", enable = true),
+                            SensorDTO(id = "3", alias = "sensor 3", enable = true),
+                            SensorDTO(id = "4", alias = "sensor 4", enable = true),
+                            SensorDTO(id = "5", alias = "sensor 5", enable = true),
+                        )
+                        _sensorList.postValue(it)
                     },
-                    onError = {
-                        showMessage(it?.message)
-                    }
+
+                    onError = { showMessage(it?.message) }
                 )
             }
         }
     }
 
 
-    fun updateSensorList() {
+    fun updateSensorList(list: List<SensorDTO>) {
 
-        val list = listOf(
-            SensorDTO(id = "1", alias = "sensor 1", enable = true),
-            SensorDTO(id = "2", alias = "sensor 2", enable = true),
-            SensorDTO(id = "3", alias = "sensor 3", enable = true),
-            SensorDTO(id = "4", alias = "sensor 4", enable = true),
-            SensorDTO(id = "5", alias = "sensor 5", enable = true),
-        )
+//        val list = listOf<SensorDTO>(
+//            SensorDTO(id = "1", alias = "sensor 1", enable = true),
+//            SensorDTO(id = "2", alias = "sensor 2", enable = true),
+//            SensorDTO(id = "3", alias = "sensor 3", enable = true),
+//            SensorDTO(id = "4", alias = "sensor 4", enable = true),
+//            SensorDTO(id = "5", alias = "sensor 5", enable = true),
+//        )
 
         viewModelScope.launch {
             val userID = authUseCase.getUserID()

@@ -76,7 +76,7 @@ class AppApplication : Application() {
             factory<ScreenNavigation> { ScreenNavigationImpl() }
 
             viewModel { DashboardViewModel(get(), get(), get()) }
-            viewModel { SplashViewModel(get(), get()) }
+            viewModel { SplashViewModel(get(), get(), get()) }
             viewModel { LoginViewModel(get(), get()) }
             viewModel { SensorManagerViewModel(get(), get(), get()) }
             viewModel { RegisterViewModel(get(), get()) }
