@@ -18,3 +18,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Smart Energy"
 include ':app'
+
+include ':toolkit:core-ui'
+include ':toolkit:core-repository'
+include ':toolkit:core-utils'
