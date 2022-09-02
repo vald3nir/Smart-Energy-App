@@ -1,0 +1,3 @@
+[submodule "android_app/toolkit"]
+	path = android_app/toolkit
+	url = https://github.com/vald3nir/Android-ToolKit.git
